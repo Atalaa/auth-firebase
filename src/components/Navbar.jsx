@@ -9,9 +9,9 @@ export default function () {
       </Link>
 
       <div>
-        <button className="btn btn-primary">Sign up</button>
-        <button className="btn btn-primary ms-2">Sign in</button>
-        <button className="btn btn-danger ms-2">Log out</button>
+        <button className="btn btn-primary">Sign Up</button>
+        <button className="btn btn-primary ms-2">Log In</button>
+        <button className="btn btn-danger ms-2">Log Out</button>
       </div>
     </nav>
   );
