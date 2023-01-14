@@ -1,8 +1,35 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { UserContext } from "../context/UserContext";
 
 export default function SignUpModal() {
   const { modalState, toggleModals } = useContext(UserContext);
+  const inputs = useRef([]);
+  const [validationLength, setValidationLength] = useState("");
+  const [validationMatch, setValidationMatch] = useState("");
+  const addInputs = (el) => {
+    /*trick: this function allows me to add all elements I want in that array, instead of addin multiple inputs variables.
+    If el exists but he's not in my array, then I add it in it */
+
+    if (el && !inputs.current.includes(el)) {
+      inputs.current.push(el);
+    }
+  };
+
+  const handleForm = (e) => {
+    e.preventDefault();
+
+    if (
+      (inputs.current[1].value.length || inputs.current[2].value.length) < 6
+    ) {
+      setValidationLength("6 characters minimum");
+      return;
+    }
+
+    if (inputs.current[1].value !== inputs.current[2].value) {
+      setValidationMatch("Passwords do not match");
+      return;
+    }
+  };
 
   return (
     <>
@@ -28,12 +55,13 @@ export default function SignUpModal() {
                 </div>
 
                 <div className="modal-body mt-3">
-                  <form className="sign-up-form">
+                  <form onSubmit={handleForm} className="sign-up-form">
                     <div className="mb-3">
                       <label htmlFor="signUpEmail" className="form-label">
                         Email address
                       </label>
                       <input
+                        ref={addInputs}
                         className="form-control"
                         type="email"
                         name="email"
@@ -47,6 +75,7 @@ export default function SignUpModal() {
                         Password
                       </label>
                       <input
+                        ref={addInputs}
                         className="form-control"
                         type="password"
                         name="password"
@@ -60,12 +89,15 @@ export default function SignUpModal() {
                         Confirm Password
                       </label>
                       <input
+                        ref={addInputs}
                         className="form-control"
                         type="password"
                         name="password"
                         id="confirmPwd"
                         required
                       />
+                      <p className="text-danger mt-1">{validationLength}</p>
+                      <p className="text-danger mt-1">{validationMatch}</p>
                     </div>
 
                     <button type="submit" className="btn btn-primary mb-3">
