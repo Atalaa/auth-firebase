@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../context/UserContext";
 
 export default function SignUpModal() {
+  const { modalState, toggleModals } = useContext(UserContext);
+
   return (
     <>
-      <div className="position-fixed top-0 vw-100 vh-100">
-        <div className="w-100 h-100 bg-dark bg-opacity-75">
+      {modalState.signUpModal && (
+        <div className="position-fixed top-0 vw-100 vh-100">
+          <div
+            className="w-100 h-100 bg-dark bg-opacity-75"
+            onClick={() => toggleModals("close")}
+          ></div>
+
           <div
             className="bg-light position-absolute top-50 start-50 translate-middle"
             style={{ minWidth: "400px" }}
@@ -13,7 +21,10 @@ export default function SignUpModal() {
               <div className="modal-content ps-3 pe-3">
                 <div className="modal-header border-bottom">
                   <h5 className="modal-title mb-3 mt-3">Sign Up</h5>
-                  <button className="btn-close"></button>
+                  <button
+                    className="btn-close"
+                    onClick={() => toggleModals("close")}
+                  ></button>
                 </div>
 
                 <div className="modal-body mt-3">
@@ -55,18 +66,18 @@ export default function SignUpModal() {
                         id="confirmPwd"
                         required
                       />
-                      <p className="text-danger mt-1">Validation</p>
                     </div>
 
-                    <button type="submit" className="btn btn-primary mb-3">Submit</button>
-
+                    <button type="submit" className="btn btn-primary mb-3">
+                      Submit
+                    </button>
                   </form>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 }
