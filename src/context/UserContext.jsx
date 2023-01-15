@@ -1,10 +1,25 @@
 import { createContext, useState, useEffect } from "react";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
 
-//create context
+import { auth } from "../firebase-config";
+
+/* create context */
 export const UserContext = createContext();
 
-//create High Order Component which is the Provider that allows to do all that logic that I pass to UserContext later on
+/* create High Order Component which is the Provider that allows to do all that logic that I pass to UserContext later on */
 export function UserContextProvider(props) {
+  const [currentUser, setCurrentUser] = useState();
+  const [loadingData, setLoadingData] = useState(true);
+
+  const signUp = (email, password) => {
+    createUserWithEmailAndPassword(auth, email, password);
+  };
+
+  /* MODAL */
   const [modalState, setModalState] = useState({
     signUpModal: false,
     logInModal: false,
@@ -22,10 +37,10 @@ export function UserContextProvider(props) {
     }
   };
 
+  /* Here props.children is App, children of UserContextProvider */
   return (
-    <UserContext.Provider value={{ modalState, toggleModals }}>
+    <UserContext.Provider value={{ modalState, toggleModals, signUp }}>
       {props.children}
     </UserContext.Provider>
   );
 }
-//Here props.children is App, children of UserContextProvider 
