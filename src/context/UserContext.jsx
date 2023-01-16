@@ -7,7 +7,7 @@ import {
 
 import { auth } from "../firebase-config";
 
-/* create context */
+/* create context object */
 export const UserContext = createContext();
 
 /* create High Order Component which is the Provider that allows to do all that logic that I pass to UserContext later on */

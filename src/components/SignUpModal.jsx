@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../context/userContext";
 
 export default function SignUpModal() {
   const { modalState, toggleModals, signUp } = useContext(UserContext);

@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
-import { UserContextProvider } from "./context/UserContext";
+import { UserContextProvider } from "./context/userContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Router>
@@ -11,3 +11,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </UserContextProvider>
   </Router>
 );
+
+/* <App> is like a component-wide, 'behind the scene' State Storage */
+  
