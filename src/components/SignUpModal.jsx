@@ -38,9 +38,20 @@ export default function SignUpModal() {
       );
       formRef.current.reset();
       setValidation("");
-      console.log(cred);
-    } catch (err) {}
+    } catch (err) {
+      if(err.code === "auth/email-already-in-use"){
+        setValidation("Email already used")
+      }
+      if(err.code === "auth/invalid-email"){
+        setValidation("Email format invalid")
+      }
+    }
   };
+
+  const closeModal = () => {
+    setValidation("")
+    toggleModals("close")
+  }
 
   return (
     <>
@@ -48,7 +59,7 @@ export default function SignUpModal() {
         <div className="position-fixed top-0 vw-100 vh-100">
           <div
             className="w-100 h-100 bg-dark bg-opacity-75"
-            onClick={() => toggleModals("close")}
+            onClick={closeModal}
           ></div>
 
           <div
@@ -61,7 +72,7 @@ export default function SignUpModal() {
                   <h5 className="modal-title mb-3 mt-3">Sign Up</h5>
                   <button
                     className="btn-close"
-                    onClick={() => toggleModals("close")}
+                    onClick={closeModal}
                   ></button>
                 </div>
 

@@ -16,7 +16,7 @@ export function UserContextProvider(props) {
   const [loadingData, setLoadingData] = useState(true);
 
   const signUp = (email, password) => {
-    createUserWithEmailAndPassword(auth, email, password);
+    return createUserWithEmailAndPassword(auth, email, password);
   };
 
   /* MODAL */
