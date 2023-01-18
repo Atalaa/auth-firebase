@@ -11,6 +11,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </UserContextProvider>
   </Router>
 );
-
 /* <App> is like a component-wide, 'behind the scene' State Storage */
-  
