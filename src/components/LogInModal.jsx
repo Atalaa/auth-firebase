@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
-import { UserContext } from "../context/userContext";
+import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
 export default function LogInModal() {
@@ -22,16 +22,13 @@ export default function LogInModal() {
     e.preventDefault();
 
     try {
-      await logIn(
-        inputs.current[0].value,
-        inputs.current[1].value
-      );
+      await logIn(inputs.current[0].value, inputs.current[1].value);
       // formRef.current.reset();
       setValidation("");
       toggleModals("close");
       navigate("/private/private-home");
     } catch {
-      setValidation("Oops, email or password invalid.")
+      setValidation("Oops, email or password invalid.");
     }
   };
 

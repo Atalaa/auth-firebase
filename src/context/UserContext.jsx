@@ -11,8 +11,8 @@ export const UserContext = createContext();
 export function UserContextProvider(props) {
 
   const [currentUser, setCurrentUser] = useState();
-  const [loadingData, setLoadingData] = useState(true);
-  
+  const [loadingData, setLoadingData] = useState(true); //true because by default data is loaded
+
   const signUp = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
@@ -20,8 +20,6 @@ export function UserContextProvider(props) {
   const logIn = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
-
-
 
   /* onAuthStateChanged allows to observe the changes related to Firebase
     i.e. signed in? logged in? logged out? */

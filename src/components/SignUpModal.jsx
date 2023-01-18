@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
-import { UserContext } from "../context/userContext";
+import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
 export default function SignUpModal() {
@@ -34,10 +34,7 @@ export default function SignUpModal() {
     }
 
     try {
-      await signUp(
-        inputs.current[0].value,
-        inputs.current[1].value
-      );
+      await signUp(inputs.current[0].value, inputs.current[1].value);
       formRef.current.reset();
       setValidation("");
       toggleModals("close");

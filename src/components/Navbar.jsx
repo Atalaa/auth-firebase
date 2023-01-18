@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { UserContext } from "../context/userContext";
+import { UserContext } from "../context/UserContext";
 import { Link, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase-config";
@@ -13,7 +13,9 @@ export default function () {
       await signOut(auth);
       navigate("/");
     } catch (error) {
-      alert("For some reason we can't disconnect.\n Please check your internet connection and retry.");
+      alert(
+        "For some reason we can't disconnect.\n Please check your internet connection and retry."
+      );
     }
   };
 
