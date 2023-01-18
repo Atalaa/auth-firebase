@@ -1,10 +1,12 @@
 import React, { useContext, useRef, useState } from "react";
 import { UserContext } from "../context/userContext";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUpModal() {
   const { modalState, toggleModals, signUp } = useContext(UserContext);
-  const inputs = useRef([]);
   const [validation, setValidation] = useState("");
+  const navigate = useNavigate();
+  const inputs = useRef([]);
   const formRef = useRef();
 
   const addInputs = (el) => {
@@ -32,26 +34,29 @@ export default function SignUpModal() {
     }
 
     try {
-      const cred = await signUp(
+      await signUp(
         inputs.current[0].value,
         inputs.current[1].value
       );
       formRef.current.reset();
       setValidation("");
+      toggleModals("close");
+      navigate("/private/private-home");
     } catch (err) {
-      if(err.code === "auth/email-already-in-use"){
-        setValidation("Email already used")
+      if (err.code === "auth/email-already-in-use") {
+        setValidation("Email already used");
       }
-      if(err.code === "auth/invalid-email"){
-        setValidation("Email format invalid")
+
+      if (err.code === "auth/invalid-email") {
+        setValidation("Email format invalid");
       }
     }
   };
 
   const closeModal = () => {
-    setValidation("")
-    toggleModals("close")
-  }
+    setValidation("");
+    toggleModals("close");
+  };
 
   return (
     <>
@@ -70,10 +75,7 @@ export default function SignUpModal() {
               <div className="modal-content ps-3 pe-3">
                 <div className="modal-header border-bottom">
                   <h5 className="modal-title mb-3 mt-3">Sign Up</h5>
-                  <button
-                    className="btn-close"
-                    onClick={closeModal}
-                  ></button>
+                  <button className="btn-close" onClick={closeModal}></button>
                 </div>
 
                 <div className="modal-body mt-3">
