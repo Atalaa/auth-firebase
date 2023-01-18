@@ -2,8 +2,8 @@ import React, { useContext, useRef, useState } from "react";
 import { UserContext } from "../context/userContext";
 import { useNavigate } from "react-router-dom";
 
-export default function SignUpModal() {
-  const { modalState, toggleModals, signUp } = useContext(UserContext);
+export default function LogInModal() {
+  const { modalState, toggleModals, logIn } = useContext(UserContext);
   const [validation, setValidation] = useState("");
   const navigate = useNavigate();
   const inputs = useRef([]);
@@ -21,36 +21,17 @@ export default function SignUpModal() {
   const handleForm = async (e) => {
     e.preventDefault();
 
-    if (
-      (inputs.current[1].value.length || inputs.current[2].value.length) < 6
-    ) {
-      setValidation("6 characters minimum");
-      return;
-    }
-
-    if (inputs.current[1].value !== inputs.current[2].value) {
-      setValidation("Passwords do not match");
-      return;
-    }
-
     try {
-      await signUp(
+      await logIn(
         inputs.current[0].value,
         inputs.current[1].value
       );
-      formRef.current.reset();
+      // formRef.current.reset();
       setValidation("");
       toggleModals("close");
       navigate("/private/private-home");
-    } catch (err) {
-      console.dir(err);
-      if (err.code === "auth/email-already-in-use") {
-        setValidation("Email already used");
-      }
-
-      if (err.code === "auth/invalid-email") {
-        setValidation("Email format invalid");
-      }
+    } catch {
+      setValidation("Oops, email or password invalid.")
     }
   };
 
@@ -61,7 +42,7 @@ export default function SignUpModal() {
 
   return (
     <>
-      {modalState.signUpModal && (
+      {modalState.logInModal && (
         <div className="position-fixed top-0 vw-100 vh-100">
           <div
             className="w-100 h-100 bg-dark bg-opacity-75"
@@ -86,7 +67,7 @@ export default function SignUpModal() {
                     ref={formRef}
                   >
                     <div className="mb-3">
-                      <label htmlFor="signUpEmail" className="form-label">
+                      <label htmlFor="logInEmail" className="form-label">
                         Email address
                       </label>
                       <input
@@ -94,13 +75,13 @@ export default function SignUpModal() {
                         className="form-control"
                         type="email"
                         name="email"
-                        id="signUpEmail"
+                        id="logInEmail"
                         required
                       />
                     </div>
 
                     <div className="mb-3">
-                      <label htmlFor="signUpPwd" className="form-label">
+                      <label htmlFor="logInPwd" className="form-label">
                         Password
                       </label>
                       <input
@@ -108,26 +89,12 @@ export default function SignUpModal() {
                         className="form-control"
                         type="password"
                         name="password"
-                        id="signUpPwd"
+                        id="logInPwd"
                         required
                       />
                     </div>
 
-                    <div className="mb-3">
-                      <label htmlFor="confirmPwd" className="form-label">
-                        Confirm Password
-                      </label>
-                      <input
-                        ref={addInputs}
-                        className="form-control"
-                        type="password"
-                        name="password"
-                        id="confirmPwd"
-                        required
-                      />
-
-                      <p className="text-danger mt-1">{validation}</p>
-                    </div>
+                    <p className="text-danger mt-1">{validation}</p>
 
                     <button type="submit" className="btn btn-primary mb-3">
                       Submit

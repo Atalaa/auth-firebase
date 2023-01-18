@@ -9,12 +9,19 @@ import {
 export const UserContext = createContext();
 
 export function UserContextProvider(props) {
+
+  const [currentUser, setCurrentUser] = useState();
+  const [loadingData, setLoadingData] = useState(true);
+  
   const signUp = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  const [currentUser, setCurrentUser] = useState();
-  const [loadingData, setLoadingData] = useState(true);
+  const logIn = (email, password) => {
+    return signInWithEmailAndPassword(auth, email, password);
+  };
+
+
 
   /* onAuthStateChanged allows to observe the changes related to Firebase
     i.e. signed in? logged in? logged out? */
@@ -47,7 +54,7 @@ export function UserContextProvider(props) {
   /* Here props.children is App, children of UserContextProvider */
   return (
     <UserContext.Provider
-      value={{ modalState, toggleModals, signUp, currentUser }}
+      value={{ modalState, toggleModals, signUp, logIn, currentUser }}
     >
       {!loadingData && props.children}
     </UserContext.Provider>
